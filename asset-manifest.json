@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Estacio-Notas/static/css/main.933ef316.css",
-    "main.js": "/Estacio-Notas/static/js/main.4d788c7a.js",
+    "main.js": "/Estacio-Notas/static/js/main.abb73284.js",
     "static/media/fa-solid-900.svg": "/Estacio-Notas/static/media/fa-solid-900.7a8b4f130182d19a2d7c.svg",
     "static/media/fa-brands-400.svg": "/Estacio-Notas/static/media/fa-brands-400.2f517e09eb2ca6650ff5.svg",
     "static/media/fa-solid-900.eot": "/Estacio-Notas/static/media/fa-solid-900.9bbb245e67a133f6e486.eot",
@@ -19,10 +19,10 @@
     "static/media/fa-regular-400.woff2": "/Estacio-Notas/static/media/fa-regular-400.7a3337626410ca2f4071.woff2",
     "index.html": "/Estacio-Notas/index.html",
     "main.933ef316.css.map": "/Estacio-Notas/static/css/main.933ef316.css.map",
-    "main.4d788c7a.js.map": "/Estacio-Notas/static/js/main.4d788c7a.js.map"
+    "main.abb73284.js.map": "/Estacio-Notas/static/js/main.abb73284.js.map"
   },
   "entrypoints": [
     "static/css/main.933ef316.css",
-    "static/js/main.4d788c7a.js"
+    "static/js/main.abb73284.js"
   ]
 }
