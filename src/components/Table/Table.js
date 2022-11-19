@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
 import * as C from "./styles";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Select from 'react-select';
 
 class Table extends React.Component {
@@ -212,7 +211,10 @@ class Table extends React.Component {
                                     ))}
                                 </tbody>
                             </table>
-                            <button onClick={this.handleAddRow(this.state.semestre)} className="btn btn-primary">
+                            <button
+                                onClick={this.handleAddRow(this.state.semestre)}
+                                className="btn btn-primary"
+                                disabled={(myStorage.length > 6) ? true : false}>
                                 Adicionar
                             </button>
                         </div>
