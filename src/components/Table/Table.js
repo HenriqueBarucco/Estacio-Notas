@@ -29,7 +29,7 @@ class Table extends React.Component {
         var media = ((av1 + ava1) + (av2 + ava2) + avd)/3
 
         if (name !== 'materia') {
-            if (media >= 6) {
+            if (media >= 6.0) {
                 rowsInput[idx]['status'] = "Aprovado";
             } else {
                 rowsInput[idx]['status'] = "Reprovado";
