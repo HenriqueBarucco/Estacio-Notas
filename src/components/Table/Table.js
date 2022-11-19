@@ -6,14 +6,12 @@ import Select from 'react-select';
 class Table extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            semestre: 's1',
-            bk: []
-        }
+        this.state = {}
     }
     handleChange = idx => e => {
         const { name, value } = e.target;
-        const myStorage = JSON.parse(localStorage.getItem(this.state.semestre)) || [];
+        const mySemestre = JSON.parse(localStorage.getItem('semestre')).value || 's1'
+        const myStorage = JSON.parse(localStorage.getItem(mySemestre)) || [];
 
         const rowsInput = [...myStorage];
 
@@ -36,7 +34,7 @@ class Table extends React.Component {
         }
 
         myStorage.splice(idx, 1);
-        localStorage.setItem(this.state.semestre, JSON.stringify(rowsInput));
+        localStorage.setItem(mySemestre, JSON.stringify(rowsInput));
         this.setState({})
     };
     handleAddRow = (props) => () => {
@@ -58,12 +56,14 @@ class Table extends React.Component {
         this.setState({})
     };
     handleRemoveSpecificRow = (idx) => () => {
-        const myStorage = JSON.parse(localStorage.getItem(this.state.semestre)) || [];
+        const myStorage = JSON.parse(localStorage.getItem(localStorage.getItem('semestre'))) || [];
+        const mySemestre = JSON.parse(localStorage.getItem('semestre')).value || 's1'
         myStorage.splice(idx, 1);
-        localStorage.setItem(this.state.semestre, JSON.stringify(myStorage));
+        localStorage.setItem(mySemestre, JSON.stringify(myStorage));
         this.setState({})
     };
     selectSemestre = (e) => {
+        localStorage.setItem('semestre', JSON.stringify({value: e.value, label: e.label}));
         this.setState({ semestre: e.value })
     }
     render() {
@@ -77,13 +77,14 @@ class Table extends React.Component {
             { value: 's7', label: '7º Semestre' },
             { value: 's8', label: '8º Semestre' }
         ];
-
-        var myStorage = JSON.parse(localStorage.getItem(this.state.semestre)) || []
+        
+        const mySemestre = JSON.parse(localStorage.getItem('semestre')) || options[0]
+        var myStorage = JSON.parse(localStorage.getItem(mySemestre.value)) || []
         return (
             <C.Container>
                 <Select
-                    value={this.state.semestre.label}
-                    defaultValue={options[0]}
+                    value={mySemestre}
+                    defaultValue={mySemestre}
                     onChange={(e) => this.selectSemestre(e)}
                     options={options}
                 />
@@ -212,7 +213,7 @@ class Table extends React.Component {
                                 </tbody>
                             </table>
                             <button
-                                onClick={this.handleAddRow(this.state.semestre)}
+                                onClick={this.handleAddRow(mySemestre.value)}
                                 className="btn btn-primary"
                                 disabled={(myStorage.length > 6) ? true : false}>
                                 Adicionar
