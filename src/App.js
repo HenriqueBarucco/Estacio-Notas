@@ -1,3 +1,4 @@
+import { Footer } from "./components/Others/Footer";
 import Table from "./components/Table/Table";
 import GlobalStyle from './styles/global';
 
@@ -6,6 +7,7 @@ function App() {
     <div>
       <Table />
       <GlobalStyle />
+      <Footer />
     </div>
   );
 }
