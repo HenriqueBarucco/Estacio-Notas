@@ -26,10 +26,10 @@ class Table extends React.Component {
         var ava2 = parseFloat((rowsInput[idx].ava2 !== "") ? rowsInput[idx].ava2 : 0)
         var avd = parseFloat((rowsInput[idx].avd !== "") ? rowsInput[idx].avd : 0)
 
-        var media = ((av1 + ava1) + (av2 + ava2) + avd)/3
+        var media = ((av1 + ava1) + (av2 + ava2) + avd) / 3
 
         if (name !== 'materia') {
-            if (media >= 6.0) {
+            if (media >= 6.0 && av1 >= 4 && av2 >= 4) {
                 rowsInput[idx]['status'] = "Aprovado";
             } else {
                 rowsInput[idx]['status'] = "Reprovado";
