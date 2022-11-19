@@ -9,32 +9,36 @@ class Table extends React.Component {
         super(props)
         this.state = {
             semestre: 's1',
-            bk: [{}]
+            bk: []
         }
     }
     handleChange = idx => e => {
-        console.log("aaa" + idx)
         const { name, value } = e.target;
-        const myStorage = JSON.parse(localStorage.getItem(this.state.semestre));
-        /* var media = ((rows[idx].av1 + rows[idx].ava1) + (rows[idx].av2 + rows[idx].ava2) + rows[idx].avd) */
-        /* console.log(media) */
-        console.log(this.state)
-        console.log("rows" + myStorage)
-        console.log(myStorage[idx])
+        const myStorage = JSON.parse(localStorage.getItem(this.state.semestre)) || [];
 
-        let newData;
+        const rowsInput = [...myStorage];
 
-        if (myStorage) {
-            newData = [...myStorage, myStorage[idx]];
-        } else {
-            newData = [myStorage[idx]];
+        rowsInput[idx][name] = value;
+
+        var av1 = parseInt((rowsInput[idx].av1 !== "") ? rowsInput[idx].av1 : 0)
+        var ava1 = parseInt((rowsInput[idx].ava1 !== "") ? rowsInput[idx].ava1 : 0)
+        var av2 = parseInt((rowsInput[idx].av2 !== "") ? rowsInput[idx].av2 : 0)
+        var ava2 = parseInt((rowsInput[idx].ava2 !== "") ? rowsInput[idx].ava2 : 0)
+        var avd = parseInt((rowsInput[idx].avd !== "") ? rowsInput[idx].avd : 0)
+
+        var media = ((av1 + ava1) + (av2 + ava2) + avd)/3
+
+        if (name !== 'materia') {
+            if (media >= 6) {
+                rowsInput[idx]['status'] = "Aprovado";
+            } else {
+                rowsInput[idx]['status'] = "Reprovado";
+            }
         }
 
-        localStorage.removeItem(this.state.semestre[idx]);
-        localStorage.setItem(this.state.semestre, JSON.stringify(newData));
-        /* this.setState({
-            rows
-        }); */
+        myStorage.splice(idx, 1);
+        localStorage.setItem(this.state.semestre, JSON.stringify(rowsInput));
+        this.setState({})
     };
     handleAddRow = (props) => () => {
         const myStorage = JSON.parse(localStorage.getItem(props)) || [];
@@ -45,7 +49,8 @@ class Table extends React.Component {
             ava1: "",
             av2: "",
             ava2: "",
-            avd: ""
+            avd: "",
+            status: "Aguardando"
         };
 
         let newRow = [...myStorage, item];
@@ -54,7 +59,7 @@ class Table extends React.Component {
         this.setState({})
     };
     handleRemoveSpecificRow = (idx) => () => {
-        const myStorage = JSON.parse(localStorage.getItem(this.state.semestre))  || [];
+        const myStorage = JSON.parse(localStorage.getItem(this.state.semestre)) || [];
         myStorage.splice(idx, 1);
         localStorage.setItem(this.state.semestre, JSON.stringify(myStorage));
         this.setState({})
@@ -74,17 +79,12 @@ class Table extends React.Component {
             { value: 's8', label: '8º Semestre' }
         ];
 
-        var teste;
-        teste = JSON.parse(localStorage.getItem(this.state.semestre))
-        if (teste == null) {
-            teste = this.state.bk
-        }
-
+        var myStorage = JSON.parse(localStorage.getItem(this.state.semestre)) || []
         return (
             <C.Container>
                 <Select
                     value={this.state.semestre.label}
-                    defaultValue={this.state.semestre.label}
+                    defaultValue={options[0]}
                     onChange={(e) => this.selectSemestre(e)}
                     options={options}
                 />
@@ -108,14 +108,14 @@ class Table extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {teste.map((item, idx) => (
-                                        <tr id="addr0" key={idx}>
+                                    {myStorage.map((x) => (
+                                        <tr id="addr0" key={myStorage.indexOf(x)}>
                                             <td>
                                                 <input
                                                     type="text"
                                                     name="materia"
-                                                    value={teste[idx].materia}
-                                                    onChange={this.handleChange(idx)}
+                                                    value={myStorage[myStorage.indexOf(x)].materia}
+                                                    onChange={this.handleChange(myStorage.indexOf(x))}
                                                     className="form-control"
                                                 />
                                             </td>
@@ -123,11 +123,11 @@ class Table extends React.Component {
                                                 <input
                                                     type="number"
                                                     name="av1"
-                                                    min="0"
-                                                    max="10"
+                                                    min="0.0"
+                                                    max="10.0"
                                                     pattern="[0-9]{2}"
-                                                    /* value={this.state.rows[idx].av1}
-                                                    onChange={this.handleChange(idx)} */
+                                                    value={myStorage[myStorage.indexOf(x)].av1}
+                                                    onChange={this.handleChange(myStorage.indexOf(x))}
                                                     className="form-control"
                                                 />
                                             </td>
@@ -135,10 +135,11 @@ class Table extends React.Component {
                                                 <input
                                                     type="number"
                                                     name="ava1"
-                                                    min="0"
-                                                    max="1"
-                                                    /* value={this.state.rows[idx].ava1}
-                                                    onChange={this.handleChange(item.id)} */
+                                                    min="0.0"
+                                                    max="1.0"
+                                                    pattern="[0-9]{1}"
+                                                    value={myStorage[myStorage.indexOf(x)].ava1}
+                                                    onChange={this.handleChange(myStorage.indexOf(x))}
                                                     className="form-control"
                                                 />
                                             </td>
@@ -146,10 +147,11 @@ class Table extends React.Component {
                                                 <input
                                                     type="number"
                                                     name="av2"
-                                                    min="0"
-                                                    max="10"
-                                                    /* value={this.state.rows[item.id].av2}
-                                                    onChange={this.handleChange(item.id)} */
+                                                    min="0.0"
+                                                    max="10.0"
+                                                    pattern="[0-9]{2}"
+                                                    value={myStorage[myStorage.indexOf(x)].av2}
+                                                    onChange={this.handleChange(myStorage.indexOf(x))}
                                                     className="form-control"
                                                 />
                                             </td>
@@ -157,10 +159,11 @@ class Table extends React.Component {
                                                 <input
                                                     type="number"
                                                     name="ava2"
-                                                    min="0"
-                                                    max="1"
-                                                    /* value={this.state.rows[item.id].ava2}
-                                                    onChange={this.handleChange(item.id)} */
+                                                    min="0.0"
+                                                    max="1.0"
+                                                    pattern="[0-9]{1}"
+                                                    value={myStorage[myStorage.indexOf(x)].ava2}
+                                                    onChange={this.handleChange(myStorage.indexOf(x))}
                                                     className="form-control"
                                                 />
                                             </td>
@@ -168,20 +171,39 @@ class Table extends React.Component {
                                                 <input
                                                     type="number"
                                                     name="avd"
-                                                    min="0"
-                                                    max="10"
-                                                    /* value={this.state.rows[item.id].avd}
-                                                    onChange={this.handleChange(item.id)} */
+                                                    min="0.0"
+                                                    max="10.0"
+                                                    pattern="[0-9]{2}"
+                                                    value={myStorage[myStorage.indexOf(x)].avd}
+                                                    onChange={this.handleChange(myStorage.indexOf(x))}
                                                     className="form-control"
                                                 />
                                             </td>
                                             <td>
-                                                <h4><span className="badge text-bg-success">Aprovado</span></h4>
+                                                {(() => {
+                                                    if (myStorage[myStorage.indexOf(x)].status === 'Aguardando') {
+                                                        return (
+                                                            <h4><span className="badge text-light text-bg-info">Aguardando</span></h4>
+                                                        )
+                                                    } else if (myStorage[myStorage.indexOf(x)].status === 'Aprovado') {
+                                                        return (
+                                                            <h4><span className="badge text-light text-bg-success">Aprovado</span></h4>
+                                                        )
+                                                    } else if (myStorage[myStorage.indexOf(x)].status === 'Reprovado') {
+                                                        return (
+                                                            <h4><span className="badge text-light text-bg-danger">Reprovado</span></h4>
+                                                        )
+                                                    } else {
+                                                        return (
+                                                            <h4><span className="badge text-light text-bg-warning">Erro</span></h4>
+                                                        )
+                                                    }
+                                                })()}
                                             </td>
                                             <td>
                                                 <button
                                                     className="btn btn-outline-danger btn-sm"
-                                                    onClick={this.handleRemoveSpecificRow(item.id)}
+                                                    onClick={this.handleRemoveSpecificRow(myStorage.indexOf(x))}
                                                 >
                                                     Remove
                                                 </button>
