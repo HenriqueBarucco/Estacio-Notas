@@ -20,11 +20,11 @@ class Table extends React.Component {
 
         rowsInput[idx][name] = value;
 
-        var av1 = parseInt((rowsInput[idx].av1 !== "") ? rowsInput[idx].av1 : 0)
-        var ava1 = parseInt((rowsInput[idx].ava1 !== "") ? rowsInput[idx].ava1 : 0)
-        var av2 = parseInt((rowsInput[idx].av2 !== "") ? rowsInput[idx].av2 : 0)
-        var ava2 = parseInt((rowsInput[idx].ava2 !== "") ? rowsInput[idx].ava2 : 0)
-        var avd = parseInt((rowsInput[idx].avd !== "") ? rowsInput[idx].avd : 0)
+        var av1 = parseFloat((rowsInput[idx].av1 !== "") ? rowsInput[idx].av1 : 0)
+        var ava1 = parseFloat((rowsInput[idx].ava1 !== "") ? rowsInput[idx].ava1 : 0)
+        var av2 = parseFloat((rowsInput[idx].av2 !== "") ? rowsInput[idx].av2 : 0)
+        var ava2 = parseFloat((rowsInput[idx].ava2 !== "") ? rowsInput[idx].ava2 : 0)
+        var avd = parseFloat((rowsInput[idx].avd !== "") ? rowsInput[idx].avd : 0)
 
         var media = ((av1 + ava1) + (av2 + ava2) + avd)/3
 
