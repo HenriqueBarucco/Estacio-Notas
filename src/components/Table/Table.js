@@ -56,8 +56,8 @@ class Table extends React.Component {
         this.setState({})
     };
     handleRemoveSpecificRow = (idx) => () => {
-        const myStorage = JSON.parse(localStorage.getItem(localStorage.getItem('semestre'))) || [];
         const mySemestre = JSON.parse(localStorage.getItem('semestre')).value || 's1'
+        const myStorage = JSON.parse(localStorage.getItem(mySemestre)) || [];
         myStorage.splice(idx, 1);
         localStorage.setItem(mySemestre, JSON.stringify(myStorage));
         this.setState({})
