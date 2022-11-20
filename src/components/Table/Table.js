@@ -342,7 +342,7 @@ class Table extends React.Component {
                                                     className="btn btn-outline-danger btn-sm"
                                                     onClick={this.handleRemoveSpecificRow(myStorage.indexOf(x))}
                                                 >
-                                                    Remove
+                                                    Remover
                                                 </button>
                                             </td>
                                         </tr>
